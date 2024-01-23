@@ -5,7 +5,11 @@ module.exports = {
     apiState: null,
     isShowNav: false,
     account: "",
-    balance: 0,
+    balance: {
+        confirmed: 0,
+        unconfirmed: 0,
+        total: 0
+    },
     publicKey: '',
     networkId: null,
     userInfo: {}

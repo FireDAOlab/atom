@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useConnect } from "../../api/pubConnect";
 
+import CurrencyInput from "../../api/CurrencyInput";
 import sats from '../../imgs/sats.png'
 import convert from '../../imgs/convert.png'
 import { Button, Pagination, Modal, Slider } from "antd";
@@ -14,18 +15,25 @@ const Assets = (props) => {
     const [activeNav, setActiveNav] = useState(1)
     const [isShowView, setIsShowView] = useState(false)
     const [inputValue, setInputValue] = useState(1);
+    const [status, setStatus] = useState(0);
+    console.log(state);
+    const getInfo = async () => {
+        
+    }
 
     const handleView = async () => {
 
+    }
+    const getconvert = ()=>{
+        // <CurrencyInput onChange={(e) => this.setState({ fromCurrency: e.target.value })} />
     }
     const onChange = (newValue) => {
         setInputValue(newValue);
     };
 
     useEffect(() => {
-
-    }, [])
-
+        getInfo()
+    },[state.account, state.apiState, state.balance])
     return (
         <AssetsStyle>
             <Modal className="view-dialog" style={{ width: '70%' }} title={("View ordinals")} open={isShowView} onOk={handleView}
@@ -138,7 +146,7 @@ const Assets = (props) => {
                                     "bitworkc": "0000",
                                     "nonce": "24159606",
                                     "time": 1703445437
-}`}
+                                }`}
                                 </p>
                             </div>
                         </div>
@@ -150,6 +158,7 @@ const Assets = (props) => {
 
             <div className="flex-container">
                 <h1 className="panel-title">Wallet Assets</h1>
+             
                 <div className="panel-box">
                     <div className="flex-box">
                         <div className="flex-datas">
@@ -157,10 +166,10 @@ const Assets = (props) => {
                                 <img src={sats} className="sats" />
                             </div>
                             <div className="sats-balance">
-                                <p>{state.balance } Sats</p>
-                                <p className="dolor">≈$40.55</p>
+                                <p>{state.balance.total} Sats</p>
+                                <p className="dolor">≈${ }</p>
                             </div>
-                            <Button className="convert-btn" onClick={()=>{}}>
+                            <Button className="convert-btn" onClick={() => { getconvert() }}>
                                 <img src={convert} className="convert" />
                                 <span>BTC</span>
                             </Button>
@@ -168,11 +177,11 @@ const Assets = (props) => {
                         <div className="sats-value">
                             <div className="value-box">
                                 <p className="name">Available</p>
-                                <p className="value">3,000 Sats</p>
+                                <p className="value">{state.balance.confirmed} Sats</p>
                             </div>
                             <div className="value-box">
                                 <p className="name">Pending</p>
-                                <p className="value">3,000 Sats</p>
+                                <p className="value">{state.balance.unconfirmed} Sats</p>
                             </div>
                             <div className="value-box">
                                 <p className="name">Atomicals</p>

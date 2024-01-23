@@ -10,46 +10,18 @@ import ConnectWalletStyle from "./ConnectWalletStyle"
 
 const ConnectWallet = (props) => {
     let { state, dispatch } = useConnect();
-
-    const [network, setNetwork] = useState("livenet");
-
-    // if (!firedaoInstalled) {
-    //     return (
-    //         <div className="wallet-contain">
-    //             <div>
-    //                 <div>
-    //                     <Button
-    //                         onClick={() => {
-    //                             window.location.href = "https://firedao.io";
-    //                         }}
-    //                     >
-    //                         Install Firedao Wallet
-    //                     </Button>
-    //                 </div>
-    //             </div>
-    //         </div>
-    //     );
-    // }
+  
     const connectWallet = async () => {
         const accounts = await window.unisat.requestAccounts();
         if (accounts && accounts[0]) {
             await pubConnect(state, dispatch)
-        } else {
+            console.log(state);
+        } else{
 
         }
-
-        try {
-            // let curChainId = await window.ethereum.request({method: "eth_chainId"})
-            // if (curChainId != develop.chainId) {
-
-            // }
-        } catch (e) {
-            console.log(e)
-        }
-        await pubConnect(state, dispatch)
-        console.log(state);
     }
 
+    
     return (
         <ConnectWalletStyle>
             <div className="wallet-contain">

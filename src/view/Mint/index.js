@@ -254,9 +254,50 @@ const Mint = () => {
                     </div>
                 </div>
                 }
+                {
+                    activeNav == 2 && < div className="panel-box">
+                        <div className="realm-data">
+                            <div className="realm-mid">
+                                <Form>
+                                    <div className="realm-boxes">
+                                        <Button>Init</Button>
+                                        <Form.Item
+                                            label="Realm"
+                                            name="ft"
+                                            className="realm-check"
+                                            rules={[
+                                                {
+                                                    required: true,
+                                                    message: 'Please enter realm and then check.',
+                                                },
+                                            ]}
+                                        >
+                                            <Input placeholder="Enter mint realm" />
+
+                                        </Form.Item>
+                                        <Button className="check-btn" onClick={() => { setIsShowCheck(true) }}>Check</Button>
+                                    </div>
+
+                                    <div className="check-bx">
+                                        <Checkbox className="checkboxes" onChange={handleChange} />
+                                        <span className="rece-add">Receive by other address</span>
+                                    </div>
+                                    <Form.Item
+                                        label="Receive Address"
+                                        name="address"
+                                    >
+                                        <Input placeholder="Enter receive address" />
+                                    </Form.Item>
+                                </Form>
+
+                                <Button className="ant-btn-primary" onClick={() => { setIsShowView(true) }}>Preview</Button>
+                            </div>
+                        </div>
+                    </div>
+                }
             </div>
 
-        </MintStyle>
+        </MintStyle >
     )
 }
 export default Mint
