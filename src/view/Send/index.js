@@ -3,6 +3,8 @@ import { Button, Form, Input } from "antd";
 import React, { useState, useEffect } from "react";
 import { useConnect } from "../../api/pubConnect";
 
+import FeeRateBar from "../components/FeeRateBar/FeeRateBar";
+
 import deletes from '../../imgs/delete.png';
 import btc from '../../imgs/BTC.png';
 import nft from '../../imgs/nft.png';
@@ -17,29 +19,30 @@ const Send = (props) => {
     const [btcAddress, setBtcAddress] = useState([])
     const [btcAmount, setBtcAmount] = useState([])
 
+    const [feeRate, setFeeRate] = useState(5);
 
     const onFinish = (values) => {
         console.log('Received values of form:', values);
     };
-    const getSendBTC =async () => {
+    const getSendBTC = async () => {
         const btcbox = form.getFieldsValue()
         const addressBox = []
         const amountBox = []
         console.log(btcbox);
-        btcbox.items.map((i)=>{
+        btcbox.items.map((i) => {
             addressBox.push(i.bReceive)
             amountBox.push(i.bAmount)
         })
         setBtcAddress(addressBox)
         setBtcAmount(amountBox)
-       console.log(btcAddress);
+        console.log(btcAddress);
         try {
-            
-            let txid = await window.unisat.sendBitcoin(btcAddress.toString(),btcAmount.toString(),);
+
+            let txid = await window.unisat.sendBitcoin(btcAddress.toString(), btcAmount.toString(),);
             console.log(txid)
-          } catch (e) {
+        } catch (e) {
             console.log(e);
-          }
+        }
     }
 
     useEffect(() => {
@@ -133,22 +136,12 @@ const Send = (props) => {
                             <div className="trans-speed">
                                 <p className="trans-title">Balance</p>
                                 <div className="trans-box">
-                                    <div className="trans-mid" tabindex="1">
-                                        <p className="trans-name">Slow</p>
-                                        <p className="trans-value">20 Sat/vB ~ 3 Hours</p>
-                                    </div>
-                                    <div className="trans-mid" tabindex="2">
-                                        <p className="trans-name">Average</p>
-                                        <p className="trans-value">20 Sat/vB ~ 3 Hours</p>
-                                    </div>
-                                    <div className="trans-mid" tabindex="3">
-                                        <p className="trans-name">Fast</p>
-                                        <p className="trans-value">20 Sat/vB ~ 3 Hours</p>
-                                    </div>
-                                    <div className="trans-mid" tabindex="4">
-                                        <p className="trans-name">Custom</p>
-                                        <Input />
-                                    </div>
+                                    <FeeRateBar
+                                        onChange={(val) => {
+                                            setFeeRate(val);
+                                        }}
+                                    />
+
                                 </div>
                             </div>
                             <div className="wallet-box">
@@ -158,7 +151,7 @@ const Send = (props) => {
                                 </div>
                                 <div className="wallet-mid">
                                     <p className="wallet-name">Amount</p>
-                                    <img src={btc} className="btc-img" /><span>0.0000</span>
+                                    <img src={btc} className="btc-img" /><span>{ state.balance.total}</span>
                                 </div>
                             </div>
                             <Button className="ant-btn-primary" onClick={() => { getSendBTC() }}>Confirm</Button>

@@ -12,5 +12,12 @@ module.exports = {
     },
     publicKey: '',
     networkId: null,
-    userInfo: {}
+    userInfo: {},
+    feeSummary:{
+        list: {
+            title: '',
+            desc: '',
+            feeRate: 0,
+          }
+    }
 };

@@ -15,16 +15,17 @@ const Assets = (props) => {
     const [activeNav, setActiveNav] = useState(1)
     const [isShowView, setIsShowView] = useState(false)
     const [inputValue, setInputValue] = useState(1);
+
     // const [status, setStatus] = useState(0);
     console.log(state);
     const getInfo = async () => {
-        
+
     }
 
     const handleView = async () => {
 
     }
-    const getconvert = ()=>{
+    const getconvert = () => {
         // <CurrencyInput onChange={(e) => this.setState({ fromCurrency: e.target.value })} />
     }
     const onChange = (newValue) => {
@@ -33,7 +34,7 @@ const Assets = (props) => {
 
     useEffect(() => {
         getInfo()
-    },[state.account, state.apiState, state.balance])
+    }, [state.account, state.apiState, state.balance])
     return (
         <AssetsStyle>
             <Modal className="view-dialog" style={{ width: '70%' }} title={("View ordinals")} open={isShowView} onOk={handleView}
@@ -158,7 +159,7 @@ const Assets = (props) => {
 
             <div className="flex-container">
                 <h1 className="panel-title">Wallet Assets</h1>
-             
+
                 <div className="panel-box">
                     <div className="flex-box">
                         <div className="flex-datas">
