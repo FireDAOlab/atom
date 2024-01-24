@@ -1,17 +1,50 @@
 
 import { Button, Form, Input } from "antd";
 import React, { useState, useEffect } from "react";
+import { useConnect } from "../../api/pubConnect";
+
 import deletes from '../../imgs/delete.png';
 import btc from '../../imgs/BTC.png';
 import nft from '../../imgs/nft.png';
 
-
 import SendStyle from "./style";
 
-const Send = () => {
+const Send = (props) => {
 
     const [activeNav, setActiveNav] = useState(1)
     const [form] = Form.useForm()
+    let { state, dispatch } = useConnect();
+    const [btcAddress, setBtcAddress] = useState([])
+    const [btcAmount, setBtcAmount] = useState([])
+
+
+    const onFinish = (values) => {
+        console.log('Received values of form:', values);
+    };
+    const getSendBTC =async () => {
+        const btcbox = form.getFieldsValue()
+        const addressBox = []
+        const amountBox = []
+        console.log(btcbox);
+        btcbox.items.map((i)=>{
+            addressBox.push(i.bReceive)
+            amountBox.push(i.bAmount)
+        })
+        setBtcAddress(addressBox)
+        setBtcAmount(amountBox)
+       console.log(btcAddress);
+        try {
+            
+            let txid = await window.unisat.sendBitcoin(btcAddress.toString(),btcAmount.toString(),);
+            console.log(txid)
+          } catch (e) {
+            console.log(e);
+          }
+    }
+
+    useEffect(() => {
+        // getSendBTC()
+    }, [])
 
     return (
         <SendStyle>
@@ -43,29 +76,60 @@ const Send = () => {
                 {activeNav == 1 && <div className="panel-box">
                     <div className="receive-data">
 
-                        <Form form={form} name="control-hooks" className="form">
+                        <Form form={form} name="control-hooks" className="form" onFinish={onFinish}>
                             <div className="receive-mid">
-                                <Form.Item
-                                    label="Receiver"
-                                    name="btc-receive"
-                                >
-                                    <Input />
-                                </Form.Item>
-                                <Form.Item
-                                    label="Amount(BTC)"
-                                    name="btc-amount"
-                                >
-                                    <Input />
-                                </Form.Item>
-                                <div style={{ margin: '50px auto' }}>
-
-                                    <img src={deletes} style={{ width: '20px' }} />
-                                </div>
-
+                                <p className="recemid-receiver">Receiver</p>
+                                <p className="recemid-amount">Amount(BTC)</p>
                             </div>
-                            <Button className="add-btn">
-                                <span>Add Receiver And Amount</span>
-                            </Button>
+                            <Form.List name="items">
+                                {(fields, { add, remove }, { errors }) => (
+                                    <div>
+
+                                        {fields.map(({ key, name, ...restField }) => (
+                                            <div className="items-box">
+                                                {/* <Form.Item
+                                                    validateTrigger={['onChange', 'onBlur']}
+                                                    rules={[
+                                                        {
+                                                            required: true,
+                                                            whitespace: true,
+                                                            message: "Please input passenger's name or delete this field.",
+                                                        },
+                                                    ]}
+                                                    noStyle
+                                                > */}
+                                                <Form.Item
+                                                    {...restField}
+                                                    name={[name, "bReceive"]}
+                                                >
+                                                    <Input value={btcAddress} />
+                                                </Form.Item>
+                                                <Form.Item
+                                                    {...restField}
+                                                    name={[name, "bAmount"]}
+
+                                                >
+                                                    <Input value={btcAmount} />
+                                                </Form.Item>
+                                                {fields.length > 0 ? (
+                                                    <div style={{ margin: '10px auto' }}
+                                                        className="dynamic-delete-button"
+                                                        onClick={() => remove(name)}>
+                                                        <img src={deletes} style={{ width: '20px' }} />
+                                                    </div>
+                                                ) : null}
+
+                                                {/* </Form.Item> */}
+                                            </div>
+                                        ))}
+
+                                        <Button className="add-btn" onClick={() => add()}>
+                                            <span>Add Receiver And Amount</span>
+                                        </Button>
+                                    </div>
+                                )}
+                            </Form.List>
+
                             <div className="trans-speed">
                                 <p className="trans-title">Balance</p>
                                 <div className="trans-box">
@@ -90,14 +154,14 @@ const Send = () => {
                             <div className="wallet-box">
                                 <div className="wallet-mid">
                                     <p className="wallet-name">Wallet Balance</p>
-                                    <img src={btc} className="btc-img" /><span>0.0002140000</span>
+                                    <img src={btc} className="btc-img" /><span>{state.balance.total}</span>
                                 </div>
                                 <div className="wallet-mid">
                                     <p className="wallet-name">Amount</p>
                                     <img src={btc} className="btc-img" /><span>0.0000</span>
                                 </div>
                             </div>
-                            <Button className="ant-btn-primary">Confirm</Button>
+                            <Button className="ant-btn-primary" onClick={() => { getSendBTC() }}>Confirm</Button>
                         </Form>
                     </div>
                 </div>

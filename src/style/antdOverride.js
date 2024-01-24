@@ -208,8 +208,13 @@ line-height: 48px;
   .receive-mid{
 display: flex;
  
-  .ant-form {
-    display: flex;
+  p {
+    width: 50%;
+    font-size: 21px;
+font-family: Roboto, Roboto;
+font-weight: 500;
+color: #999999;
+line-height: 27px;
   }
 }
 .realm-mid{
@@ -250,6 +255,14 @@ display: flex;
   width: 8px;
   height: 14px;
 }
+}
+
+.items-box{
+  width: 100%;
+  display: flex;
+  .ant-form-item{
+    
+  }
 }
 
 .ant-form-item-explain-error{
@@ -556,6 +569,19 @@ padding-top: 0em;
   }
 
   @media screen and (max-width:1440px){
+
+    .receive-mid{
+display: flex;
+ 
+  p {
+    width: 50%;
+    font-size: 16px;
+font-family: Roboto, Roboto;
+font-weight: 500;
+color: #999999;
+line-height: 20px;
+  }
+}
     .ant-btn-primary {
       font-size:16px;
       line-height:36px;

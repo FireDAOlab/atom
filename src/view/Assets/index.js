@@ -15,7 +15,7 @@ const Assets = (props) => {
     const [activeNav, setActiveNav] = useState(1)
     const [isShowView, setIsShowView] = useState(false)
     const [inputValue, setInputValue] = useState(1);
-    const [status, setStatus] = useState(0);
+    // const [status, setStatus] = useState(0);
     console.log(state);
     const getInfo = async () => {
         

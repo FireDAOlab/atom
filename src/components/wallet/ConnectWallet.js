@@ -32,7 +32,7 @@ const ConnectWallet = (props) => {
                 <Button className="wallet-btn" onClick={() => { connectWallet() }}>
                     <img src={wallet} className="wallet-img" />
                     <span>{
-                        state.account ? state.account.substring(1, 5) + "..." + state.account.substring(state.account.length - 5, state.account.length) : 'Connect'
+                        state.account ? state.account.substring(0,5) + "..." + state.account.substring(state.account.length - 5, state.account.length) : 'Connect'
                     }</span>
                 </Button>
             </div>
