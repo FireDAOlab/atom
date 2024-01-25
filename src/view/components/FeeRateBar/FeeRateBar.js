@@ -9,6 +9,12 @@ const FeeRateBar = (props) => {
     const [feeOptions, setFeeOptions] = useState([]);
     const [feeRateInputVal, setFeeRateInputVal] = useState('');
 
+    useEffect(() => {
+        wallet.getFeeSummary().then((v) => {
+          setFeeOptions([...v.list, { title: 'Custom', feeRate: 0 }]);
+        });
+      }, []);
+    
     const adjustFeeRateInput = (inputVal) => {
        
         setFeeRateInputVal(inputVal);
