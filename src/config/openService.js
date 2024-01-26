@@ -1,5 +1,5 @@
 const OpenApiService=()=> {
-    let store: OpenApiStore;
+    // let store: OpenApiStore;
     clientAddress = '';
     const setHost = async (host) => {
       this.store.host = host;
